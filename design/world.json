@@ -1,0 +1,121 @@
+{
+  "worldName": "ちいかわ 郎 ラーメン",
+  "displayName": "ちいかわ 郎 ラーメン",
+  "description": "ちいかわの世界にあるラーメン屋『郎』を舞台にしたコール体験ワールド。食券を買ってカウンターに座り、店員NPCをタップして正しいコールを選ぶ。正解で赤いスープのラーメンが出て提供完了。NGコールは退店。店内には店主・助手・常連客・歴史案内のNPCもいて、タップで会話/学習できる。左右の壁にはImage Mapの地図画像を配置。",
+  "version": [1, 0, 0],
+  "minecraft": { "platform": "bedrock", "version": [1, 20, 80], "edition": "education" },
+
+  "packs": {
+    "behaviorPack": { "name": "chiikawa_jiro_bp", "minEngineVersion": [1, 20, 0], "note": "ゲーム進行（mcfunction状態機械）＋店内NPC。カスタムブロック/実験的機能は使わない（MEEで安定動作）。min_engine_version は古いエンジンでも読めるよう低め" },
+    "resourcePack": { "name": null, "note": "未使用。画像はImage Mapの地図＋額縁方式。world_resource_packs.json は空" }
+  },
+
+  "spawn": { "x": 0, "y": -59, "z": -5, "facing": "south" },
+
+  "ground": {
+    "floorY": -64,
+    "flatLayers": [
+      { "block": "minecraft:bedrock", "count": 1 },
+      { "block": "minecraft:dirt", "count": 3 },
+      { "block": "minecraft:grass", "count": 1 }
+    ],
+    "surfaceY": -60
+  },
+
+  "regions": [
+    { "id": "plaza",    "x1": -12, "x2": 12, "z1": -10, "z2": 20, "tag": "外の広場（保護領域）" },
+    { "id": "shop",     "x1": -8,  "x2": 8,  "z1": 0,   "z2": 16, "tag": "店内（白コンクリの建物）" },
+    { "id": "entrance", "x1": -1,  "x2": 1,  "z1": 0,   "z2": 0,  "tag": "自動ドア（バニラの鉄ドア2枚＋感圧板。既定は閉）" },
+    { "id": "seats",    "x1": -7,  "x2": 7,  "z1": 8,   "z2": 8,  "tag": "カウンター席（スツール5脚）" },
+    { "id": "counter",  "x1": -7,  "x2": 7,  "z1": 10,  "z2": 10, "tag": "赤いカウンター天板" },
+    { "id": "kitchen",  "x1": -8,  "x2": 8,  "z1": 11,  "z2": 15, "tag": "厨房（かまど・大釜・のれん・店員NPC）" }
+  ],
+
+  "fixtures": [
+    { "id": "rouSign",       "type": "signboard", "x": 0, "y": -52, "z": -1, "note": "黄色地に黒で『郎』のドット絵（BIZ UDゴシック13×13から起こす）" },
+    { "id": "ticketMachine", "type": "machine",   "x": 6, "y": -59, "z": 3,  "note": "縦型の食券販売機（幅3×高さ6、奥行き2）。上=ミニ、中=小、下=大。各ボタン段を1ブロック空け、奥の隠しコマンドブロックを押したプレイヤーとして実行" },
+    { "id": "callSign",      "type": "sign",      "x": 0, "y": -54, "z": 9,  "note": "コール案内看板。「店員をタップしてニンニク入れますか？」" },
+    { "id": "clerkNpc",      "type": "npc",       "x": 0, "y": -59, "z": 11, "note": "店員NPC(jiro_clerk)。タップするとコールのダイアログ(jiro_call)が開く" },
+    { "id": "masterNpc",     "type": "npc",       "x": -4, "y": -59, "z": 11, "note": "店主(jiro_master)。タップで二郎系の説明（会話のみ・取引なし）" },
+    { "id": "helperNpc",     "type": "npc",       "x": 4,  "y": -59, "z": 11, "note": "助手(jiro_helper)。タップでコール用語の説明（会話のみ）" },
+    { "id": "guestANpc",     "type": "npc",       "x": -6, "y": -59, "z": 7,  "note": "常連客(jiro_guesta)。タップで黄金コールの紹介（会話のみ）" },
+    { "id": "guestBNpc",     "type": "npc",       "x": 6,  "y": -59, "z": 7,  "note": "学生客(jiro_guestb)。タップでマナーの紹介（会話のみ）" },
+    { "id": "historyNpc",    "type": "npc",       "x": -6, "y": -59, "z": 4,  "note": "歴史案内(jiro_history)。店内側を向き、NPCダイアログ内で年表/一杯の特徴/コール文化/広がり/マナー/ミニクイズをページ送り学習" },
+    { "id": "queueNpcs",     "type": "npc",       "note": "店外に行列客3人(jiro_queue1..3)。会話のみ" },
+    { "id": "oolongMachine", "type": "machine",   "x": 9,  "y": -59, "z": -5, "note": "黒烏龍茶自販機。黒い筐体、商品窓、取出口、価格表示つき。ボタンで水ポーションを黒烏龍茶として受け取る（¥500）" }
+  ],
+
+  "seats": { "z": 8, "y": -59, "xs": [-6, -3, 0, 3, 6] },
+
+  "callPresets": [
+    { "label": "そのまま",                    "call": 1, "ok": true,  "note": "正解（追加トッピングなし）" },
+    { "label": "替え玉ください",             "call": 2, "ok": false, "note": "NG：替え玉は博多ラーメン" },
+    { "label": "ニンニク ヤサイ アブラ カラメ", "call": 3, "ok": true,  "note": "正解（定番コール）" },
+    { "label": "大盛りで！",                  "call": 4, "ok": false, "note": "NG：二郎は「マシ」" },
+    { "label": "全マシマシ",                  "call": 5, "ok": true,  "note": "正解（全部マシマシ）" },
+    { "label": "はい",                       "call": 6, "ok": false, "note": "NG：返事だけでコールになっていない" }
+  ],
+
+  "historyLessons": [
+    { "button": "年表を読む", "scene": "jiro_history_timeline_1", "note": "1968年の目黒での創業、1970年代の三田移転、学生街との関係、直系店/二郎系への広がり" },
+    { "button": "一杯の特徴", "scene": "jiro_history_bowl_1", "note": "豚骨醤油系スープ、太麺、ヤサイ、豚、黄色い看板、赤いカウンター、食券制" },
+    { "button": "コール文化", "scene": "jiro_history_call_1", "note": "『ニンニク入れますか？』に対して無料トッピングを短く伝える文化" },
+    { "button": "広がりを知る", "scene": "jiro_history_spread_1", "note": "直系店とインスパイア系の違い、ジャンルとしての広がり" },
+    { "button": "マナーを学ぶ", "scene": "jiro_history_manners_1", "note": "食券、行列、食べ切れる量、初心者は無理に増やさない" },
+    { "button": "ミニクイズ", "scene": "jiro_history_quiz1", "note": "問題→選択肢→解答ページの順に進む。QとAを同時に表示しない" }
+  ],
+
+  "imageMaps": {
+    "enabledInGenerator": true,
+    "leftWall": { "file": "ちいかわとはちわれ.jpg", "mapIds": [1000, 1001, 1002, 1003] },
+    "rightWall": { "file": "ちいかわとはちわれ_2.jpg", "mapIds": [1100, 1101, 1102, 1103] },
+    "kitchenWall": { "file": "シーサーと鎧さん.jpeg", "mapIds": [2000, 2001, 2002, 2003] },
+    "outdoorPanel": { "file": "ちいかわラーメン.webp", "mapIds": [3000, 3001, 3002, 3003] },
+    "note": "tryashtar/image-map CLIでBedrock mapデータを生成し、frame + ItemFrame BlockEntityとして各所へ2x2配置。"
+  },
+
+  "mechanics": [
+    { "type": "protection", "scope": "plaza", "buildableInside": false, "note": "広場の外周にバリア、地中に deny" },
+    { "type": "spawnGuide", "teleportTo": { "x": 0, "y": -59, "z": -5 } },
+    { "type": "autoDoor", "region": "entrance", "door": "minecraft:iron_door", "doors": 2, "sensor": "heavy_weighted_pressure_plate", "default": "closed", "frameBlock": "minecraft:gray_concrete", "vanilla": true, "note": "中央の柱をなくして2枚の扉(x=-1,0)を隣り合わせに連結（両開き）。バニラの鉄ドア＋足元(z=±1)の感圧板。踏むと開く。Behavior Pack に依存しないので確実に動く。既定は閉。" },
+    { "type": "ticketMachine", "shape": "vertical", "size": [3, 6], "buttons": ["上: ラーメン豚 ミニ ¥1540", "中: ラーメン豚 小 ¥1760", "下: ラーメン豚 大 ¥1980"], "buy": "paper", "setsState": 3, "note": "横並び/隣接信号のズレを避けるため、上中下の縦3段ボタンを1段ずつ離して注文を選ぶ。コマンドは奥の隠しブロックで /execute as @p として実行" },
+    {
+      "type": "callGame",
+      "style": "ramen-jiro-call",
+      "input": "npc-dialogue",
+      "clerk": "店員NPC(tag=jiro_clerk)をタップするとダイアログ jiro_call が開く。spawn_npcs で位置タグ付けして dialogue change で割り当て、ボタンは /scoreboard players set @initiator jiro_call N",
+      "timeLimitSeconds": 0,
+      "eatMode": "食べる判定は使わず、ラーメンを受け取った時点で提供完了",
+      "npcs": ["店員 jiro_clerk(コール)", "店主 jiro_master", "助手 jiro_helper", "常連客 jiro_guesta", "学生客 jiro_guestb"],
+      "presets": ["そのまま(1)", "替え玉(2:NG)", "ニンニクヤサイアブラカラメ(3)", "大盛り(4:NG)", "全マシマシ(5)", "はい(6:NG)"],
+      "flow": [
+        "食券を持ってカウンターに座ると state=3（コール開始、jiro_sec=10 と具材スコアを初期化）",
+        "店員NPCをタップ→ダイアログの6選択肢から正しいコールを1タップで選ぶ",
+        "正解→選んだ内容を tellraw で読み上げ→赤いスープのラーメン提供（beetroot_soup）",
+        "NGコール（替え玉・大盛り・はい）→理由を表示して退店",
+        "ラーメンを受け取ったら入口から退店可"
+      ],
+      "note": "NPCダイアログのボタンは「プレイヤーがNPCを直接タップ」したときのみ発火するため、自動オープンせず dialogue change で割り当てる。自由テキスト入力はBedrockでは不可なため、6択プリセット選択。NG選択肢で難易度を上げている。"
+    },
+    { "type": "jiroInteriorDecor", "render": "vanilla-blocks-and-signs", "items": ["黄色いメニュー札", "無料トッピング表", "食券/着席ルール", "行列マーカー", "セルフ水コーナー", "卓上小物", "黒烏龍茶自販機"] },
+    { "type": "imageMapFrames", "render": "bedrock-maps-in-item-frames", "size": [2, 2], "leftMapIds": [1000, 1001, 1002, 1003], "rightMapIds": [1100, 1101, 1102, 1103], "kitchenMapIds": [2000, 2001, 2002, 2003], "outdoorMapIds": [3000, 3001, 3002, 3003] }
+  ],
+
+  "scoreboard": {
+    "jiro_state": "0=店外 / 1=食券購入済 / 3=コール中(店員をタップ) / 5=提供済(退店可)",
+    "jiro_menu": "1=ミニ / 2=小 / 3=大", "jiro_sec": "未使用（タイマー廃止）", "jiro_call": "選んだコール番号(1..6)", "jiro_sys": "グローバルクロック",
+    "jiro_g": "ニンニク 0/1", "jiro_y": "ヤサイ 0/1", "jiro_a": "アブラ 0/1",
+    "jiro_k": "カラメ 0/1", "jiro_mm": "マシマシ 0/1"
+  },
+
+  "rules": {
+    "gameMode": "adventure",
+    "immutableWorld": false,
+    "mobSpawning": false,
+    "commandsEnabled": true,
+    "educationFeaturesEnabled": true,
+    "doDaylightCycle": false,
+    "doWeatherCycle": false,
+    "keepInventory": true
+  }
+}

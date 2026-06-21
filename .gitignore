@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Generated Minecraft worlds and packaged outputs
+dist/
+*.mcworld
+*.mcpack
+*.mcaddon
+
+# Local/generated working files
+_work/
+build/_work/
+*.log
+
+# External binaries/tools (download separately)
+tools/ImageMap4-Windows/*.exe
+tools/ImageMap4-Windows/*.dll
+tools/*.zip
+
+# Large/private source material
+images/
+*.pptx
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
