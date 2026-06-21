@@ -23,7 +23,10 @@ tools/ImageMap4-Windows/*.dll
 tools/*.zip
 
 # Large/private source material
-images/
+images/*
+!images/minecraft-edu-ramen-shop-world/
+!images/minecraft-edu-ramen-shop-world/README.md
+!images/minecraft-edu-ramen-shop-world/*.png
 *.pptx
 
 # OS/editor
