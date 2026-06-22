@@ -33,6 +33,10 @@ Minecraft Education / Bedrock 向けの `.mcworld` を Python で生成するプ
 
 `dist/` の中身はビルドで再生成できます。ソースから作り直す場合は、次の手順を使ってください。
 
+## 📖 関連ドキュメント
+
+- [AIでMinecraft Educationのワールドを作る考え方](docs/ai-minecraft-education-world-generation.md)
+
 ## 🧰 必要環境
 
 - Windows
