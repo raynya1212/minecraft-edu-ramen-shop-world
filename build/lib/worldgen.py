@@ -89,11 +89,11 @@ def write_level_dat(path: str):
     root["world_policies"] = CompoundTag({})
 
     # ゲームモード・難易度
-    # 既定はアドベンチャー(2)：プレイヤーは破壊・設置できず、ボタン操作は可能。
-    # 運営者は /gamemode creative で編集できる。
+    # 既定はアドベンチャー(2)。ただし Minecraft Education では能力を強く絞ると
+    # ボタン操作までできなくなる環境があるため、ForceGameType と能力固定は緩める。
     root["GameType"] = IntTag(2)        # アドベンチャー
     root["Difficulty"] = IntTag(1)
-    root["ForceGameType"] = ByteTag(1)
+    root["ForceGameType"] = ByteTag(0)
     root["spawnMobs"] = ByteTag(1)
 
     # スポーン
@@ -120,15 +120,15 @@ def write_level_dat(path: str):
         {
             "attackmobs": ByteTag(1),
             "attackplayers": ByteTag(1),
-            "build": ByteTag(0),
+            "build": ByteTag(1),
             "doorsandswitches": ByteTag(1),
             "flISpeed": FloatTag(0.05),
             "flying": ByteTag(0),
-            "instabuild": ByteTag(0),
+            "instabuild": ByteTag(1),
             "invulnerable": ByteTag(0),
             "lightning": ByteTag(0),
-            "mayfly": ByteTag(0),
-            "mine": ByteTag(0),
+            "mayfly": ByteTag(1),
+            "mine": ByteTag(1),
             "op": ByteTag(0),
             "opencontainers": ByteTag(1),
             "permissionsLevel": IntTag(0),
@@ -207,7 +207,7 @@ def write_level_dat(path: str):
     root["XBLBroadcastIntent"] = IntTag(3)
     root["PlatformBroadcastIntent"] = IntTag(3)
     root["cheatsEnabled"] = ByteTag(1)
-    root["hasBeenLoadedInCreative"] = ByteTag(0)
+    root["hasBeenLoadedInCreative"] = ByteTag(1)
     root["spawnGameMode"] = IntTag(2)
 
     # Bedrock の level.dat は先頭に [version(4B) + length(4B)] のヘッダが必要。
