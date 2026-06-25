@@ -136,6 +136,12 @@ def main():
     check(isolated_rows, "券売機の注文コマンド段が隣接していない")
     check(all(fn in cmd for fn, cmd in zip(("order_mini", "order_small", "order_large"), ticket_cmds)), "券売機がミニ/小/大を選べる")
     check(all("execute as @p" in cmd for cmd in ticket_cmds), "券売機ボタンが押したプレイヤーとして注文関数を実行")
+    interactive_spots = [(C.TICKET_X - 1, C.TICKET_Z - 1), (C.SHOP_X_MIN + 3, 11), (9, -6)]
+    no_deny_under_buttons = all(
+        block_at(level, x, C.GROUND_Y - 1, z) != "deny"
+        for x, z in interactive_spots
+    )
+    check(no_deny_under_buttons, "ボタン操作地点の床下に deny が無い")
     check(block_at(level, 0, C.CEIL_Y - 1, C.COUNTER_Z - 1) == "wall_sign", "コール案内の看板（店員をタップ）")
     check(block_at(level, C.SYSTEM_CLOCK_X, C.SYSTEM_CLOCK_Y, C.SYSTEM_CLOCK_Z) == "repeating_command_block", "床下のリピートコマンド時計")
     clock_be = be_at(level, C.SYSTEM_CLOCK_X, C.SYSTEM_CLOCK_Y, C.SYSTEM_CLOCK_Z)

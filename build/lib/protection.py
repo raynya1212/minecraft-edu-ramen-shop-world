@@ -17,7 +17,5 @@ def build_protection(w):
             w.set_block(x1, y, z, "barrier")
             w.set_block(x2, y, z, "barrier")
 
-    # 広場の床下に薄い「deny」層を敷き、地表ブロックの破壊を抑止（運用で Member 化した時用）。
-    for x in range(x1 + 1, x2):
-        for z in range(z1 + 1, z2):
-            w.set_block(x, C.GROUND_Y - 1, z, "deny")
+    # Education の deny はボタンなどのブロック操作も抑止することがあるため、
+    # 体験ワールドの保護はアドベンチャーモードと外周バリアに任せる。
