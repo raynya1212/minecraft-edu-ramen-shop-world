@@ -93,7 +93,7 @@ def write_level_dat(path: str):
     # 運営者は /gamemode creative で編集できる。
     root["GameType"] = IntTag(2)        # アドベンチャー
     root["Difficulty"] = IntTag(1)
-    root["ForceGameType"] = ByteTag(0)
+    root["ForceGameType"] = ByteTag(1)
     root["spawnMobs"] = ByteTag(1)
 
     # スポーン
@@ -120,15 +120,15 @@ def write_level_dat(path: str):
         {
             "attackmobs": ByteTag(1),
             "attackplayers": ByteTag(1),
-            "build": ByteTag(1),
+            "build": ByteTag(0),
             "doorsandswitches": ByteTag(1),
             "flISpeed": FloatTag(0.05),
             "flying": ByteTag(0),
-            "instabuild": ByteTag(1),
+            "instabuild": ByteTag(0),
             "invulnerable": ByteTag(0),
             "lightning": ByteTag(0),
-            "mayfly": ByteTag(1),
-            "mine": ByteTag(1),
+            "mayfly": ByteTag(0),
+            "mine": ByteTag(0),
             "op": ByteTag(0),
             "opencontainers": ByteTag(1),
             "permissionsLevel": IntTag(0),
@@ -207,7 +207,7 @@ def write_level_dat(path: str):
     root["XBLBroadcastIntent"] = IntTag(3)
     root["PlatformBroadcastIntent"] = IntTag(3)
     root["cheatsEnabled"] = ByteTag(1)
-    root["hasBeenLoadedInCreative"] = ByteTag(1)
+    root["hasBeenLoadedInCreative"] = ByteTag(0)
     root["spawnGameMode"] = IntTag(2)
 
     # Bedrock の level.dat は先頭に [version(4B) + length(4B)] のヘッダが必要。
